@@ -6,12 +6,10 @@ import './../../styles/Children.css'
 
 export function ChildItem(props: Child) {
   return (
-    <Grid>
-      <Card className="childrenCard">
-        <h1>{props.name}</h1>
-        <p>{props.age}</p>
-        <p>{props.isNice ? '👍' : '👎'}</p>
-      </Card>
-    </Grid>
+    <Card className="childrenCard">
+      <h1>{props.name}</h1>
+      <p>{props.age}</p>
+      <p>{props.isNice ? '👍' : '👎'}</p>
+    </Card>
   )
 }
