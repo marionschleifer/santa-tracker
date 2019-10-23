@@ -4,6 +4,7 @@ import ApolloClient from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import React from 'react'
 import './../styles/App.css'
+import { ChildForm } from './children/ChildForm'
 import { ChildrenList } from './children/ChildrenList'
 
 const createApolloClient = () => {
@@ -22,6 +23,7 @@ export function App() {
     <ApolloProvider client={client}>
       <div className="App">
         <header className="App-header">
+          <ChildForm />
           <ChildrenList />
           <img src="https://c.pxhere.com/photos/a8/92/imp_pair_funny_cute_sweet_fun_deco_figure-1054982.jpg!d" />
         </header>
