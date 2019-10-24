@@ -10,12 +10,12 @@ import {
 import { GET_CHILDREN } from './ChildrenList'
 
 const ADD_CHILD = gql`
-  mutation addChild($name: String!, $age: Int!, $isNice: Boolean) {
-    insert_children(objects: [{ name: $name }]) {
+  mutation addChild($name: String!, $age: Int!, $isNice: Boolean!) {
+    insert_children(objects: [{ name: $name, age: $age, isNice: $isNice }]) {
       returning {
         id
-        age
         name
+        age
         isNice
       }
     }
@@ -57,38 +57,32 @@ export function ChildForm() {
         setChildIsNice(true)
       }}
     >
-      <label>
-        Name:
-        <br />
-        <input
-          className="input"
-          placeholder="Child's name"
-          value={childName}
-          onChange={e => setChildName(e.target.value)}
-        />
-      </label>
+      <h1>New child</h1>
+      Name:
       <br />
-      <label>
-        Age:
-        <br />
-        <input
-          type="number"
-          className="input"
-          placeholder="Child's age"
-          value={childAge}
-          onChange={e => setChildAge(parseInt(e.target.value, 10))}
-        />
-      </label>
+      <input
+        className="input"
+        placeholder="Child's name"
+        value={childName}
+        onChange={e => setChildName(e.target.value)}
+      />
       <br />
-      <label>
-        Is nice:
-        <br />
-        <input type="radio" value="male" /> Yes
-        <br />
-        <input type="radio" name="gender" value="female" /> No
-        <br />
-      </label>
-
+      Age:
+      <br />
+      <input
+        type="number"
+        className="input"
+        placeholder="Child's age"
+        value={childAge}
+        onChange={e => setChildAge(Number(e.target.value))}
+      />
+      <br />
+      Is nice:
+      <br />
+      <input type="radio" name="isNice" value="true" /> Yes
+      <br />
+      <input type="radio" name="isNice" value="false" /> No
+      <br />
       <i className="inputMarker fa fa-angle-right" />
       <input type="submit" value="Submit" />
     </form>

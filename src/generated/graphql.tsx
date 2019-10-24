@@ -723,7 +723,7 @@ export type UuidComparisonExp = {
 export type AddChildMutationVariables = {
   name: Scalars['String'],
   age: Scalars['Int'],
-  isNice?: Maybe<Scalars['Boolean']>
+  isNice: Scalars['Boolean']
 };
 
 
@@ -733,7 +733,7 @@ export type AddChildMutation = (
     { __typename?: 'children_mutation_response' }
     & { returning: Array<(
       { __typename?: 'children' }
-      & Pick<Children, 'id' | 'age' | 'name' | 'isNice'>
+      & Pick<Children, 'id' | 'name' | 'age' | 'isNice'>
     )> }
   )> }
 );
@@ -751,12 +751,12 @@ export type GetChildrenQuery = (
 
 
 export const AddChildDocument = gql`
-    mutation addChild($name: String!, $age: Int!, $isNice: Boolean) {
-  insert_children(objects: [{name: $name}]) {
+    mutation addChild($name: String!, $age: Int!, $isNice: Boolean!) {
+  insert_children(objects: [{name: $name, age: $age, isNice: $isNice}]) {
     returning {
       id
-      age
       name
+      age
       isNice
     }
   }
