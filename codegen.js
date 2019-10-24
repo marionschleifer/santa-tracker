@@ -26,6 +26,7 @@ module.exports = {
       typeNames: 'change-case#pascalCase',
       enumValues: 'change-case#upperCase',
       transformUnderscore: true,
+      avoidOptionals: true,
     },
   },
 }

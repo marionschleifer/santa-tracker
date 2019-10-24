@@ -94,7 +94,7 @@
     "no-implicit-dependencies": false,
     "object-literal-key-quotes": [true, "as-needed"],
 
-    "curly": [false],
+    "curly": [true, "as-needed"],
     "no-parameter-reassignment": true,
     "no-console": false,
     "no-shadowed-variable": false,

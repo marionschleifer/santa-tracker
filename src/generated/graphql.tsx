@@ -135,7 +135,7 @@ export type ChildrenBoolExp = {
 /** unique or primary key constraints on table "children" */
 export enum ChildrenConstraint {
   /** unique or primary key constraint */
-  ChildrenPkey = 'children_pkey'
+  CHILDREN_PKEY = 'children_pkey'
 }
 
 /** input type for incrementing integer columne in table "children" */
@@ -197,6 +197,7 @@ export type ChildrenObjRelInsertInput = {
 export type ChildrenOnConflict = {
   constraint: ChildrenConstraint,
   update_columns: Array<ChildrenUpdateColumn>,
+  where?: Maybe<ChildrenBoolExp>,
 };
 
 /** ordering options when selecting data from "children" */
@@ -211,13 +212,13 @@ export type ChildrenOrderBy = {
 /** select columns of table "children" */
 export enum ChildrenSelectColumn {
   /** column name */
-  Age = 'age',
+  AGE = 'age',
   /** column name */
-  Id = 'id',
+  ID = 'id',
   /** column name */
-  IsNice = 'isNice',
+  ISNICE = 'isNice',
   /** column name */
-  Name = 'name'
+  NAME = 'name'
 }
 
 /** input type for updating data in table "children" */
@@ -275,13 +276,13 @@ export type ChildrenSumOrderBy = {
 /** update columns of table "children" */
 export enum ChildrenUpdateColumn {
   /** column name */
-  Age = 'age',
+  AGE = 'age',
   /** column name */
-  Id = 'id',
+  ID = 'id',
   /** column name */
-  IsNice = 'isNice',
+  ISNICE = 'isNice',
   /** column name */
-  Name = 'name'
+  NAME = 'name'
 }
 
 /** aggregate var_pop on columns */
@@ -316,14 +317,6 @@ export type ChildrenVarianceFields = {
 export type ChildrenVarianceOrderBy = {
   age?: Maybe<OrderBy>,
 };
-
-/** conflict action */
-export enum ConflictAction {
-  /** ignore the insert on this row */
-  Ignore = 'ignore',
-  /** update the row with the given values */
-  Update = 'update'
-}
 
 /** columns and relationships of "gifts" */
 export type Gifts = {
@@ -381,7 +374,7 @@ export type GiftsBoolExp = {
 /** unique or primary key constraints on table "gifts" */
 export enum GiftsConstraint {
   /** unique or primary key constraint */
-  GiftsPkey = 'gifts_pkey'
+  GIFTS_PKEY = 'gifts_pkey'
 }
 
 /** input type for inserting data into table "gifts" */
@@ -432,6 +425,7 @@ export type GiftsObjRelInsertInput = {
 export type GiftsOnConflict = {
   constraint: GiftsConstraint,
   update_columns: Array<GiftsUpdateColumn>,
+  where?: Maybe<GiftsBoolExp>,
 };
 
 /** ordering options when selecting data from "gifts" */
@@ -444,11 +438,11 @@ export type GiftsOrderBy = {
 /** select columns of table "gifts" */
 export enum GiftsSelectColumn {
   /** column name */
-  ChildId = 'childId',
+  CHILDID = 'childId',
   /** column name */
-  Content = 'content',
+  CONTENT = 'content',
   /** column name */
-  Id = 'id'
+  ID = 'id'
 }
 
 /** input type for updating data in table "gifts" */
@@ -461,11 +455,11 @@ export type GiftsSetInput = {
 /** update columns of table "gifts" */
 export enum GiftsUpdateColumn {
   /** column name */
-  ChildId = 'childId',
+  CHILDID = 'childId',
   /** column name */
-  Content = 'content',
+  CONTENT = 'content',
   /** column name */
-  Id = 'id'
+  ID = 'id'
 }
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
@@ -542,17 +536,17 @@ export type MutationRootUpdateGiftsArgs = {
 /** column ordering options */
 export enum OrderBy {
   /** in the ascending order, nulls last */
-  Asc = 'asc',
+  ASC = 'asc',
   /** in the ascending order, nulls first */
-  AscNullsFirst = 'asc_nulls_first',
+  ASC_NULLS_FIRST = 'asc_nulls_first',
   /** in the ascending order, nulls last */
-  AscNullsLast = 'asc_nulls_last',
+  ASC_NULLS_LAST = 'asc_nulls_last',
   /** in the descending order, nulls first */
-  Desc = 'desc',
+  DESC = 'desc',
   /** in the descending order, nulls first */
-  DescNullsFirst = 'desc_nulls_first',
+  DESC_NULLS_FIRST = 'desc_nulls_first',
   /** in the descending order, nulls last */
-  DescNullsLast = 'desc_nulls_last'
+  DESC_NULLS_LAST = 'desc_nulls_last'
 }
 
 /** query root */
@@ -726,6 +720,24 @@ export type UuidComparisonExp = {
   _nin?: Maybe<Array<Scalars['uuid']>>,
 };
 
+export type AddChildMutationVariables = {
+  name: Scalars['String'],
+  age: Scalars['Int'],
+  isNice?: Maybe<Scalars['Boolean']>
+};
+
+
+export type AddChildMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_children: Maybe<(
+    { __typename?: 'children_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'children' }
+      & Pick<Children, 'id' | 'age' | 'name' | 'isNice'>
+    )> }
+  )> }
+);
+
 export type GetChildrenQueryVariables = {};
 
 
@@ -738,6 +750,45 @@ export type GetChildrenQuery = (
 );
 
 
+export const AddChildDocument = gql`
+    mutation addChild($name: String!, $age: Int!, $isNice: Boolean) {
+  insert_children(objects: [{name: $name}]) {
+    returning {
+      id
+      age
+      name
+      isNice
+    }
+  }
+}
+    `;
+export type AddChildMutationFn = ApolloReactCommon.MutationFunction<AddChildMutation, AddChildMutationVariables>;
+
+/**
+ * __useAddChildMutation__
+ *
+ * To run a mutation, you first call `useAddChildMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddChildMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addChildMutation, { data, loading, error }] = useAddChildMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      age: // value for 'age'
+ *      isNice: // value for 'isNice'
+ *   },
+ * });
+ */
+export function useAddChildMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddChildMutation, AddChildMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddChildMutation, AddChildMutationVariables>(AddChildDocument, baseOptions);
+      }
+export type AddChildMutationHookResult = ReturnType<typeof useAddChildMutation>;
+export type AddChildMutationResult = ApolloReactCommon.MutationResult<AddChildMutation>;
+export type AddChildMutationOptions = ApolloReactCommon.BaseMutationOptions<AddChildMutation, AddChildMutationVariables>;
 export const GetChildrenDocument = gql`
     query getChildren {
   children {
